@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第二單元：誰最適合當班長？ - 課後複習站</title>
+    <style>
+        /* --- 全域設定 --- */
+        :root {
+            --primary-color: #27AE60; /* 單元二：成長綠 */
+            --accent-color: #F39C12;  /* 輔助橘 */
+            --think-color: #8E44AD;   /* 思考紫 */
+            --bg-color: #F9F9F9;
+            --text-color: #333;
+            --card-bg: #FFF;
+        }
+
+        body {
+            font-family: "微軟正黑體", "Microsoft JhengHei", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* --- Header --- */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        h1 { margin: 0; font-size: 2.5em; }
+        .subtitle { font-size: 1.2em; opacity: 0.9; margin-top: 10px; }
+
+        /* --- 通用卡片樣式 --- */
+        .section-title {
+            text-align: center;
+            color: var(--primary-color);
+            margin-top: 50px;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+            font-weight: bold;
+            border-bottom: 3px solid var(--accent-color);
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column; /* 手機版預設垂直排列 */
+            gap: 20px;
+            align-items: center;
+        }
+
+        /* 電腦版調整為左右排列 */
+        @media (min-width: 600px) {
+            .card { flex-direction: row; }
+            .card.reverse { flex-direction: row-reverse; } /* 交錯排列 */
+            .card-img-area { width: 50%; }
+            .card-text-area { width: 50%; }
+        }
+
+        /* --- 圖片預留區樣式 (含 16:9 強制比例與互動效果) --- */
+        .img-placeholder {
+            width: 100%;
+            /* 強制設定為 16:9 比例 (1920x1080) */
+            aspect-ratio: 16 / 9; 
+            background-color: #eee;
+            border: 3px dashed #bbb;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #777;
+            font-weight: bold;
+            text-align: center;
+            padding: 0;
+            box-sizing: border-box;
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .img-placeholder:hover {
+            border-color: var(--primary-color);
+            transform: scale(1.02);
+            cursor: zoom-in; /* 滑鼠游標變成放大鏡 */
+        }
+
+        .img-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 保持比例填滿 */
+            display: block;
+        }
+
+        /* --- 重點整理區塊 --- */
+        .concept-box {
+            background-color: #E9F7EF; /* 配合綠色系 */
+            border-left: 5px solid var(--primary-color);
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+        
+        .concept-title { font-weight: bold; font-size: 1.2em; margin-bottom: 10px; color: #1E8449; }
+
+        .warning-box {
+            background-color: #FFF3E0;
+            border: 2px solid var(--accent-color);
+            color: #D35400;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        /* --- 行動準則 (Action Guide) --- */
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .action-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border-top: 5px solid var(--accent-color);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .action-icon { font-size: 3em; margin-bottom: 10px; display: block; }
+
+        /* --- 動腦想一想區塊 --- */
+        .thinking-box {
+            border: 2px solid #eee;
+            border-radius: 15px;
+            padding: 20px;
+            background-color: #fff;
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .thinking-box::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 6px;
+            background-color: var(--think-color);
+        }
+
+        .thinking-title {
+            font-weight: bold;
+            font-size: 1.3em;
+            color: var(--think-color);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .scenario-desc {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        .question-prompt {
+            font-weight: bold;
+            color: #333;
+            font-size: 1.1em;
+            margin-top: 10px;
+        }
+
+        .question-prompt::before {
+            content: "🤔 ";
+        }
+
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 40px;
+            background-color: #333;
+            color: #bbb;
+        }
+
+        /* --- 燈箱 (Lightbox) 樣式 --- */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .lightbox-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 85%;
+            border: 5px solid #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            animation: zoomIn 0.3s;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+            z-index: 10000;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: var(--accent-color);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        @keyframes zoomIn {
+            from {transform:scale(0.8); opacity: 0;} 
+            to {transform:scale(1); opacity: 1;}
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- 頁首 -->
+    <header>
+        <div class="container">
+            <h1>第二單元：誰最適合當班長？</h1>
+            <div class="subtitle">AI 真的公平嗎？認識演算法的偏見</div>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <!-- 第一部分：故事回顧 -->
+        <div style="text-align: center;">
+            <div class="section-title">📖 故事回顧</div>
+        </div>
+
+        <!-- 場景 1 -->
+        <div class="card">
+            <div class="card-img-area">
+                <div class="img-placeholder">
+                    <img src="https://lh3.googleusercontent.com/pw/AP1GczMipTBkwqIGyQOj2oJ0_NzFAi9g5o6OJ4CM9uZM9JEdxaigq8W0zLvEm3xL42qihzv0PH0w3p5yyWE0D_hOps1PuEQu4n107HPjycra8xixBYGjFvk=w1920-h1080" alt="場景圖：老師介紹小合鳥系統" onerror="this.style.display='none';this.parentNode.innerText='【圖片位置】\n請放上老師介紹\n「小合鳥班級幹部推薦系統」的畫面';">
+                </div>
+            </div>
+            <div class="card-text-area">
+                <h3>1. AI 幫我們選班長</h3>
+                <p>這學期要選班級幹部了！為了選出最適合的人選，老師決定請 AI 系統「小合鳥」幫忙。系統會分析每位同學平常的表現、成績和特質來進行推薦。</p>
+            </div>
+        </div>
+
+        <!-- 場景 2 -->
+        <div class="card reverse">
+            <div class="card-img-area">
+                <div class="img-placeholder">
+                    <img src="https://lh3.googleusercontent.com/pw/AP1GczNHW34fIrXbeuPx_EkbkKy4CVfOclG3kh6JV9Hs0nh-Xx9Cu17rl6f67cx1k2aV624oWBmk98jNG5Hm8AJB1gAo_KEkqIS-2gm2IWmXhGdjNGrdIGM=w1920-h1080" alt="場景圖：重複推薦同一人" onerror="this.style.display='none';this.parentNode.innerText='【圖片位置】\n請放上論文圖3-5\n系統重複推薦同一位同學的畫面';">
+                </div>
+            </div>
+            <div class="card-text-area">
+                <h3>2. 咦？怎麼都是她？</h3>
+                <p>結果出來了，大家都嚇了一跳！不管是要選班長、學藝股長還是體育股長，「小合鳥」系統竟然<strong>全部都推薦同一位同學——李小耘！</strong></p>
+            </div>
+        </div>
+
+        <!-- 場景 3 -->
+        <div class="card">
+            <div class="card-img-area">
+                <div class="img-placeholder">
+                    <img src="https://lh3.googleusercontent.com/pw/AP1GczOGGokJxZ4_dQSKoQgA88rTPLszuvWycBgnYL5w2Jtx0DcLfEGYKlcZhM-uMvWP88K5YzEsOqfZuw2uFkyD6eEaWSqqh-w-58jdQS6GPuh2qc2YJc8=w1920-h1080" alt="場景圖：AI戴有色眼鏡" onerror="this.style.display='none';this.parentNode.innerText='【圖片位置】\n請放上論文圖3-6\nAI解釋自己戴了有色眼鏡的畫面';">
+                </div>
+            </div>
+            <div class="card-text-area">
+                <h3>3. AI 的「有色眼鏡」</h3>
+                <p>大家覺得很不公平。原來，AI 因為資料不完整，認為「成績好 = 什麼都好」，就像戴上了<strong>有色眼鏡</strong>一樣，看不見其他同學的優點。</p>
+            </div>
+        </div>
+
+        <!-- 第二部分：重點整理 -->
+        <div style="text-align: center;">
+            <div class="section-title">💡 為什麼 AI 會偏心？</div>
+        </div>
+
+        <div class="concept-box">
+            <div class="concept-title">1. AI 的決策來自「資料」</div>
+            <p>AI 不是魔法，它做決定的依據是我們餵給它的資料。如果我們只給 AI 看成績單，它就會以為成績好的人最優秀；如果只給它看體適能成績，它就會以為跑得快的人最棒。</p>
+        </div>
+
+        <div class="concept-box">
+            <div class="concept-title">2. 演算法偏見 (Algorithmic Bias)</div>
+            <p>當 AI 的訓練資料不夠全面，或者設計規則時考慮不周全，AI 就會產生偏見。這就像是你只認識班上的一小群人，卻要你選出全班的好人好事代表，結果一定不準確。</p>
+        </div>
+
+        <div class="warning-box">
+            重要觀念：AI 的決定不代表絕對的「公平」，它反映的是資料背後的樣子。
+        </div>
+
+        <!-- 第三部分：行動準則 -->
+        <div style="text-align: center;">
+            <div class="section-title">🛡️ 面對 AI 決策，我們可以...</div>
+        </div>
+
+        <div class="action-grid">
+            <div class="action-item">
+                <span class="action-icon">🤔</span>
+                <h3>保持懷疑 (Doubt)</h3>
+                <p>當 AI 做出排名或推薦時，不要馬上全盤接受。想一想：它的標準是什麼？</p>
+            </div>
+            <div class="action-item">
+                <span class="action-icon">⚖️</span>
+                <h3>思考公平 (Fairness)</h3>
+                <p>看看結果是否只對某些人有利？是不是有哪些群體被忽略了？</p>
+            </div>
+            <div class="action-item">
+                <span class="action-icon">🗣️</span>
+                <h3>主動提問 (Ask)</h3>
+                <p>像遊戲中一樣，詢問 AI：「你為什麼做這個決定？」這叫做要求「可解釋性」。</p>
+            </div>
+        </div>
+
+        <!-- 第四部分：舉一反三（延伸思考） -->
+        <div style="text-align: center;">
+            <div class="section-title">🧠 動腦想一想</div>
+            <p style="max-width: 600px; margin: 0 auto 30px auto;">
+                如果 AI 的資料庫有偏差，在其他領域會發生什麼有趣或糟糕的事情呢？請看看以下案例，試著思考看看：
+            </p>
+        </div>
+
+        <!-- 案例 A：美食推薦 -->
+        <div class="thinking-box">
+            <div class="thinking-title">🍔 案例一：有錢人的美食地圖？</div>
+            <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 250px;">
+                    <div class="img-placeholder">
+                        <img src="https://lh3.googleusercontent.com/pw/AP1GczMsJeXy5xr95g0cEdoII7I-_e1lKyLKL6eokPIY-VwBrz6E87hNxBOydsbL6ZsN9W5skSrK-mW3sUgiiVgme9gWBRbGXcq_Rdjp1k5xNI7SDBuuM20=w1920-h1080" alt="美食情境圖" onerror="this.style.display='none';this.parentNode.innerText='【圖片位置】\n建議放一張高級餐廳或路邊攤對比圖';">
+                    </div>
+                </div>
+                <div style="flex: 2;">
+                    <div class="scenario-desc">
+                        <strong>情境：</strong><br>
+                        有一款「臺北美食通 AI」，訓練資料主要來自高消費族群的部落格和評論。<br>
+                        當小明問它：「請推薦學校附近好吃的午餐。」<br>
+                        AI 回答：「推薦您去吃 A 餐廳的松露燉飯（800元）或是 B 飯店的龍蝦吃到飽（1500元）。」
+                    </div>
+                    <div class="question-prompt">
+                        想一想：這個 AI 的建議對小學生來說實用嗎？它忽略了哪一群人的需求？
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 案例 B：音樂推薦 (流行度偏見) -->
+        <div class="thinking-box">
+            <div class="thinking-title">🎵 案例二：只聽得懂流行歌的 AI</div>
+            <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 250px;">
+                    <div class="img-placeholder">
+                        <img src="https://lh3.googleusercontent.com/pw/AP1GczMSG_QFuSQ-t9fO8xm1F6SN0wsGRCwBP1sDbKzlAZwPaEQQkIjEBuZunLxu32-t-uqbvv8R6E3Ero3Ss0kg4qbp2UtMcW5Ps-bR2gWCsR5qzOeZRQA=w1920-h1080" alt="音樂情境圖" onerror="this.style.display='none';this.parentNode.innerText='【圖片位置】\n建議放一張耳機或演唱會圖片';">
+                    </div>
+                </div>
+                <div style="flex: 2;">
+                    <div class="scenario-desc">
+                        <strong>情境：</strong><br>
+                        阿公想聽一些傳統的歌仔戲，於是他對著智慧音箱說：「放一些好聽的歌給我聽。」<br>
+                        結果 AI 播放的是最新的韓團舞曲和美國流行樂，因為它的資料庫裡這類歌曲點擊率最高。
+                    </div>
+                    <div class="question-prompt">
+                        想一想：AI 認為「多人聽 = 好聽」，這個標準對阿公來說公平嗎？這算不算是對傳統文化的偏見？
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 案例 C：超級自動駕駛-->
+        <div class="thinking-box">
+            <div class="thinking-title">🚙 案例三：超級自動駕駛 </div>
+            <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 250px;">
+                    <div class="img-placeholder">
+                        <img src="https://lh3.googleusercontent.com/pw/AP1GczNsaiPSOwdG7R_AxDSZYqQ4SOvXR7vC6xXFAWr5dWe2mR_BD9YbVgIi1WwqYj0WRD4DSOQksQ5eu7k2gKHFSvrUHJQr5dEMZ39dD1PVFEQQuH_zSc8=w1920-h1080" alt="自動駕駛情境圖" onerror="this.style.display='none';this.parentNode.innerText='【圖片位置】\n建議放一張自動駕駛的圖片';">
+                    </div>
+                </div>
+                <div style="flex: 2;">
+                    <div class="scenario-desc">
+                        <strong>情境：</strong><br>
+                        一家車廠開發了「超強自動駕駛」，他們在美國的大城市測試時從來都沒發生過車禍。<br>
+                        結果有人把車子開到鄉間小路，結果超強自動駕駛看到路邊的「野牛」或「麋鹿」時，因為 AI 沒看過這種動物，不知道要煞車，差點撞上去。
+                    </div>
+                    <div class="question-prompt">
+                        想一想：為什麼在大城市很厲害的 AI，到了鄉下就變笨了？開發者在訓練 AI 時，是不是忘記把「鄉村的風景」也教給它？
+                    </div>
+                </div>
+            </div>
+        </div>
+	<!-- 案例 D：誰的婚禮殿堂？-->
+        <div class="thinking-box">
+            <div class="thinking-title">💒 案例四：誰的婚禮殿堂？ </div>
+            <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 250px;">
+                    <div class="img-placeholder">
+                        <img src="https://lh3.googleusercontent.com/pw/AP1GczPg1IaNm2mD2AXMIaGx4Sxz6zL2UMeTdWQMlhy2djs506Cr4cnb29fhC6-EobaoYdCQtDDPSvsz7yVjybNVzvRB2cmbA_8sFrc_CVTZdzqIiu7hCvg=w1920-h1080" alt="婚禮" onerror="this.style.display='none';this.parentNode.innerText='【圖片位置】\n建議放一張婚禮的圖片';">
+                    </div>
+                </div>
+                <div style="flex: 2;">
+                    <div class="scenario-desc">
+                        <strong>情境：</strong><br>
+                        小華準備要結婚了，但是她完全沒有關於婚禮如何舉辦的想法，於是想請 AI 幫忙生成圖片，看能不能找到一些靈感，輸入「婚禮」的繪圖指令。<br>
+                        AI 生成了 10 張圖，每一張都是穿著白色婚紗的新娘和在教堂結婚的場景。
+                    </div>
+                    <div class="question-prompt">
+                        想一想：世界上只有這種在教堂舉行的婚禮嗎？AI 為什麼沒自己畫出印度的紅色莎麗婚禮，或是臺灣傳統的流水席婚禮？如果你不說清楚，AI 是否就讓大家的想像力受到侷限了？
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>本教材僅供學術研究使用</p>
+        <p style="font-size: 0.9em; margin-top: 10px;">國立臺北教育大學 數學暨資訊教育學系</p>
+    </footer>
+
+    <!-- 燈箱 (Lightbox) 功能 -->
+    <div id="myLightbox" class="lightbox">
+        <span class="close-btn">&times;</span>
+        <img class="lightbox-content" id="img01">
+    </div>
+
+    <script>
+        var modal = document.getElementById("myLightbox");
+        var modalImg = document.getElementById("img01");
+        var closeBtn = document.getElementsByClassName("close-btn")[0];
+        var images = document.querySelectorAll('.img-placeholder img');
+
+        images.forEach(function(img) {
+            img.addEventListener('click', function() {
+                if(this.complete && this.naturalHeight !== 0) {
+                    modal.style.display = "flex";
+                    modalImg.src = this.src;
+                }
+            });
+        });
+
+        closeBtn.onclick = function() { 
+            modal.style.display = "none";
+        }
+
+        modal.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        }
+        
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                modal.style.display = "none";
+            }
+        });
+    </script>
+
+</body>
+</html>
